@@ -14,7 +14,7 @@ import {
   Typography,
   Select,
 } from '@material-ui/core';
-import { useQueryClient } from 'react-query';
+import { useQueryClient, useQuery } from 'react-query';
 import { IAlertStatus } from 'shared/interfaces/utils/IAlert';
 import { AxiosError } from 'axios';
 import { IErrorResponse } from 'shared/interfaces/utils/IErrorResonse';
@@ -37,11 +37,7 @@ import * as yup from 'yup';
 import { FormikProps, useFormik } from 'formik';
 import { PasswordStrength } from 'components/PasswordStrength';
 import { PasswordPrinciple, validatePassword } from 'shared/utils/passwordUtil';
-
-type Props = {
-  account: IAccount[];
-  AlertOpen: (success: IAlertStatus, message: string) => void;
-};
+import moment from 'moment';
 
 const { getAccount, updateAccount } = accountService();
 const { changePassword } = authService();
@@ -55,11 +51,12 @@ const MyAccount = () => {
 
   const { data, isLoading } = getAccount();
   const { mutate, isLoading: isUpdateLoading } = updateAccount();
-  const { mutate: changePasswordmutate } = changePassword();
-  const { isOpen: isAlertOpen, alertRef, AlertOpen } = useAlert({ autoHideDuration: 2000, horizontal: 'center' });
+  const { mutate: changePasswordmutate, isError: isError } = changePassword();
+  const { isOpen: isAlertOpen, alertRef, AlertOpen } = useAlert({ autoHideDuration: 5000, horizontal: 'center' });
   const queryClient = useQueryClient();
 
   const [states, setStates] = useState<any>([]);
+  const [password_str, setPasswordStr] = useState<string>('');
 
   const [passwordState, setPasswordState] = useState<IUserChangePasswordRequestPayload>({
     current_password: '',
@@ -67,11 +64,8 @@ const MyAccount = () => {
     new_password_confirmation: '',
   });
 
-  function ifEmpty(val: any) {
-    if (!val) {
-      setPasswordState({ ...passwordState, current_password: '', new_password: '', new_password_confirmation: '' });
-    }
-  }
+  const [passwordMatch, setPasswordMatch] = useState(false);
+  const [passwordHelper, setPasswordHelper] = useState('');
 
   const initialValues: IAccountUpdatePayload = {
     email: data ? data.data.attributes.email : '',
@@ -103,8 +97,8 @@ const MyAccount = () => {
     last_name: yup.string().required(),
     gender: yup.string().required(),
     contact_no: yup.string().required(),
-    country: yup.string().required(),
-    country_code: yup.string().required(),
+    country: yup.string().required('Country is required'),
+    country_code: yup.string().required('Country code is required'),
     primary_type: yup.string(),
     adult_minor: yup.string(),
     state_region: yup.string().when('country', {
@@ -126,19 +120,53 @@ const MyAccount = () => {
         AlertOpen('success', 'Account details has been successfully updated');
       },
     });
-    changePasswordmutate(passwordState, {
-      onSuccess: () => {
-        queryClient.invalidateQueries('password');
-        AlertOpen('success', 'Password has been successfully updated');
-      },
-    });
+    if (passwordState.current_password) {
+      changePasswordmutate(passwordState, {
+        onSuccess: () => {
+          queryClient.invalidateQueries('password');
+          AlertOpen('success', 'Password has been successfully updated');
+        },
+        onError: (errors) => {
+          if (errors?.response?.data?.errors) {
+            const errorResponseArray = errorResponseToArray(errors.response.data.errors);
+            const errorResponse = errorResponseArray.join(',');
+            if (errorResponse === 'current_password: incorrect password') {
+              AlertOpen('error', 'Incorrect Current Password');
+            } else if (errorResponse === "password_confirmation: doesn't match") {
+              AlertOpen('error', 'Password must match');
+            } else if (errorResponse === 'Password,password: is too short (minimum is 6 characters)') {
+              AlertOpen('error', 'New Password is too short (minimum of 6 characters)');
+            } else {
+              AlertOpen(
+                'error',
+                'New Password must have atleast 1 lowercase letter [a-z], uppercase letter [A-Z], numeric character [0-9] and 1 special character',
+              );
+            }
+          } else {
+            AlertOpen('error', 'unknown');
+          }
+        },
+      });
+    }
   };
 
   const validatePassword = () => {
     changePasswordmutate(passwordState, {
-      // onSuccess: (e) => {
-      //   console.log(e);
-      // },
+      onError: (errors) => {
+        if (errors?.response?.data?.errors) {
+          const errorResponseArray = errorResponseToArray(errors.response.data.errors);
+          if (errorResponseArray.join(',') === 'current_password: incorrect password') {
+            setPasswordMatch(false);
+            setPasswordState({ ...passwordState, new_password: '', new_password_confirmation: '' });
+            setPasswordHelper("Password doesn't match");
+          } else {
+            setPasswordMatch(true);
+            setPasswordHelper('Password matches');
+          }
+        } else {
+          console.log('Error');
+        }
+      },
     });
   };
 
@@ -164,9 +192,15 @@ const MyAccount = () => {
       form.setFieldValue('state_region', data.data.attributes.state_region);
       form.setFieldValue('age_range_from', data.data.attributes.age_range_from);
       form.setFieldValue('age_range_to', data.data.attributes.age_range_to);
-      form.setFieldValue('birth_date', data.data.attributes.birth_date);
+      form.setFieldValue('birth_date', moment(data.data.attributes.birth_date, 'DD-MM-YYYY').format('YYYY-MM-DD'));
       form.setFieldValue('representation', data.data.attributes.representation);
       form.setFieldValue('preferred_contact_method', data.data.attributes.preferred_contact_method);
+
+      const newStates = statesList
+        .filter((state) => state.countryCode === data?.data.attributes.country)
+        .map((state) => ({ key: state.name, value: state.name }));
+
+      setStates(newStates);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
@@ -179,8 +213,10 @@ const MyAccount = () => {
   const countries = countriesList.map((country) => ({ key: country.name, value: country.code }));
 
   const handleSetCountryStates = (countryCode: any) => {
-    const filteredStates = statesList.filter((state) => state.countryCode === countryCode);
-    const newStates = filteredStates.map((state) => ({ key: state.name, value: state.name }));
+    const newStates = statesList
+      .filter((state) => state.countryCode === countryCode)
+      .map((state) => ({ key: state.name, value: state.name }));
+    // const newStates = filteredStates.map((state) => ({ key: state.name, value: state.name }));
     setStates(newStates);
   };
 
@@ -286,11 +322,12 @@ const MyAccount = () => {
                         fullWidth
                         data={countries}
                         value={form.values.country}
-                        onChange={(e: any) => {
+                        onChange={(e) => {
                           form.setFieldValue('country', e.target.value);
                           form.setFieldValue('state_region', '');
                           handleSetCountryStates(e.target.value);
                         }}
+                        name="country"
                         errorMessage={getErrorMessage(form.touched.country, form.errors.country)}
                       />
                     </Grid>
@@ -300,7 +337,11 @@ const MyAccount = () => {
                         fullWidth
                         data={states}
                         value={form.values.state_region}
-                        onChange={(e: any) => form.setFieldValue('state_region', e.target.value)}
+                        name="state_region"
+                        onChange={(e) => {
+                          form.setFieldValue('state_region', e.target.value);
+                          form.handleChange(e);
+                        }}
                         errorMessage={getErrorMessage(form.touched.state_region, form.errors.state_region)}
                         disabled={states.length === 0}
                       />
@@ -516,12 +557,19 @@ const MyAccount = () => {
                           InputLabelProps={{ shrink: true }}
                           name="current_password"
                           value={passwordState.current_password}
+                          className={
+                            !passwordState.current_password
+                              ? ''
+                              : !passwordMatch
+                              ? classes.passwordInvalid
+                              : classes.passwordValid
+                          }
+                          helperText={!passwordState.current_password ? '' : passwordHelper}
                           onChange={(e) => {
                             form.handleChange(e);
                             setPasswordState({ ...passwordState, current_password: e.target.value });
-                            ifEmpty(e.target.value);
-                            validatePassword();
                           }}
+                          onKeyUpCapture={() => validatePassword()}
                         />
                       </Grid>
                       <Grid xs={12} md={6} lg={6} item></Grid>
@@ -539,7 +587,7 @@ const MyAccount = () => {
                             form.handleChange(e);
                             setPasswordState({ ...passwordState, new_password: e.target.value });
                           }}
-                          disabled={!passwordState.current_password}
+                          {...getDisabled(!passwordMatch)}
                         />
                       </Grid>
                       <Grid xs={12} md={6} lg={6} item>
@@ -556,12 +604,12 @@ const MyAccount = () => {
                             form.handleChange(e);
                             setPasswordState({ ...passwordState, new_password_confirmation: e.target.value });
                           }}
-                          disabled={!passwordState.current_password}
+                          {...getDisabled(!passwordMatch)}
                         />
                       </Grid>
                     </Grid>
                     <Grid xs={12} md={6} lg={6} item className={classes.passwordPrinciples}>
-                      <PasswordStrength password="" />
+                      <PasswordStrength password={password_str} />
                     </Grid>
                   </Grid>
                 </CardContent>
