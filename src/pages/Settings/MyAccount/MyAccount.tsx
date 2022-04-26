@@ -37,6 +37,7 @@ import * as yup from 'yup';
 import { FormikProps, useFormik } from 'formik';
 import { PasswordStrength } from 'components/PasswordStrength';
 import { PasswordPrinciple, validatePassword } from 'shared/utils/passwordUtil';
+import moment from 'moment';
 
 type Props = {
   account: IAccount[];
@@ -164,9 +165,15 @@ const MyAccount = () => {
       form.setFieldValue('state_region', data.data.attributes.state_region);
       form.setFieldValue('age_range_from', data.data.attributes.age_range_from);
       form.setFieldValue('age_range_to', data.data.attributes.age_range_to);
-      form.setFieldValue('birth_date', data.data.attributes.birth_date);
+      form.setFieldValue('birth_date', moment(data.data.attributes.birth_date, 'DD-MM-YYYY').format('YYYY-MM-DD'));
       form.setFieldValue('representation', data.data.attributes.representation);
       form.setFieldValue('preferred_contact_method', data.data.attributes.preferred_contact_method);
+
+      const newStates = statesList
+        .filter((state) => state.countryCode === data?.data.attributes.country)
+        .map((state) => ({ key: state.name, value: state.name }));
+
+      setStates(newStates);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
@@ -179,8 +186,10 @@ const MyAccount = () => {
   const countries = countriesList.map((country) => ({ key: country.name, value: country.code }));
 
   const handleSetCountryStates = (countryCode: any) => {
-    const filteredStates = statesList.filter((state) => state.countryCode === countryCode);
-    const newStates = filteredStates.map((state) => ({ key: state.name, value: state.name }));
+    const newStates = statesList
+      .filter((state) => state.countryCode === countryCode)
+      .map((state) => ({ key: state.name, value: state.name }));
+    // const newStates = filteredStates.map((state) => ({ key: state.name, value: state.name }));
     setStates(newStates);
   };
 
@@ -286,11 +295,12 @@ const MyAccount = () => {
                         fullWidth
                         data={countries}
                         value={form.values.country}
-                        onChange={(e: any) => {
+                        onChange={(e) => {
                           form.setFieldValue('country', e.target.value);
                           form.setFieldValue('state_region', '');
                           handleSetCountryStates(e.target.value);
                         }}
+                        name="country"
                         errorMessage={getErrorMessage(form.touched.country, form.errors.country)}
                       />
                     </Grid>
@@ -300,7 +310,11 @@ const MyAccount = () => {
                         fullWidth
                         data={states}
                         value={form.values.state_region}
-                        onChange={(e: any) => form.setFieldValue('state_region', e.target.value)}
+                        name="state_region"
+                        onChange={(e) => {
+                          form.setFieldValue('state_region', e.target.value);
+                          form.handleChange(e);
+                        }}
                         errorMessage={getErrorMessage(form.touched.state_region, form.errors.state_region)}
                         disabled={states.length === 0}
                       />
@@ -377,7 +391,10 @@ const MyAccount = () => {
                                 value={form.values.birth_date}
                                 onChange={(e) => {
                                   form.handleChange(e);
-                                  form.setFieldValue('birth_date', e.target.value);
+                                  form.setFieldValue(
+                                    'birth_date',
+                                    moment(e.target.value, 'DD-MM-YYYY').format('YYYY-MM-DD'),
+                                  );
                                 }}
                               />
                             </Grid>
