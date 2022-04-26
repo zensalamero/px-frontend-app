@@ -1,3 +1,5 @@
+import { AxiosError } from 'axios';
+
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { useMutation } from 'react-query';
 
@@ -11,6 +13,8 @@ import {
   IUserChangePasswordRequestPayload,
   IUserChangePasswordResponsePayload,
 } from 'shared/interfaces/IUser';
+
+import { IErrorResponse } from 'shared/interfaces/utils/IErrorResonse';
 
 const { login: loginDao, setCompleteProfile: setCompleteProfileDao, changePassword: changePasswordDao } = authDao();
 
@@ -34,9 +38,11 @@ export const authService = () => {
   };
 
   const changePassword = () => {
-    return useMutation<IUserChangePasswordResponsePayload, Error, IUserChangePasswordRequestPayload>(
-      (payload: IUserChangePasswordRequestPayload) => changePasswordDao(payload),
-    );
+    return useMutation<
+      IUserChangePasswordResponsePayload,
+      AxiosError<IErrorResponse>,
+      IUserChangePasswordRequestPayload
+    >((payload: IUserChangePasswordRequestPayload) => changePasswordDao(payload));
   };
 
   return {
