@@ -229,14 +229,21 @@ const Sidebar: React.FC<Props> = ({
   );
   return (
     <>
-      <Hidden smUp implementation="css">
+      <Hidden xsUp implementation="css">
         <Drawer
           variant="temporary"
           anchor={theme.direction === 'rtl' ? 'right' : 'left'}
           open={isMobileDrawerOpen}
           onClose={handleMobileDrawer}
+          className={clsx(classes.drawer, {
+            [classes.drawerOpen]: !isDrawerCollapse,
+            [classes.drawerClose]: isDrawerCollapse,
+          })}
           classes={{
-            paper: classes.drawerPaper,
+            paper: clsx({
+              [classes.drawerOpen]: !isDrawerCollapse,
+              [classes.drawerClose]: isDrawerCollapse,
+            }),
           }}
           ModalProps={{
             keepMounted: true, // Better open performance on mobile.
