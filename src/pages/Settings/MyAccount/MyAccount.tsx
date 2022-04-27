@@ -19,7 +19,7 @@ import { IAlertStatus } from 'shared/interfaces/utils/IAlert';
 import { AxiosError } from 'axios';
 import { IErrorResponse } from 'shared/interfaces/utils/IErrorResonse';
 import { errorResponseToArray } from 'shared/utils/errorResponseToArray';
-import { ContactInput, Input, InputPassword, useAlert, SelectWithData, Backdrop } from 'themes/elements';
+import { ContactInput2, Input, InputPassword, useAlert, SelectWithData, Backdrop } from 'themes/elements';
 import { useCardContentStyle } from 'themes/styles/useCardContentStyle';
 import { IAccount, IAccountResponsePayload, IAccountUpdatePayload } from 'shared/interfaces/IAccount';
 import { IUserChangePasswordRequestPayload } from 'shared/interfaces/IUser';
@@ -73,15 +73,19 @@ const MyAccount = () => {
     first_name: data ? data.data.attributes.first_name : '',
     last_name: data ? data.data.attributes.last_name : '',
     gender: data ? data.data.attributes.gender : '',
-    contact_no: data ? data.data.attributes.contact_no : '',
+    contact_no: data ? data.data.attributes.contact_no : null,
     country: data ? data.data.attributes.country : 'us',
     country_code: data ? data.data.attributes.country_code : '1',
     primary_type: data ? data.data.attributes.primary_type : '',
-    adult_minor: data ? data.data.attributes.adult_minor : '',
+    adult_minor: data ? data.data.attributes.adult_minor : 'Adult',
     state_region: data ? data.data.attributes.state_region : '',
     age_range_from: data ? data.data.attributes.age_range_from : '',
     age_range_to: data ? data.data.attributes.age_range_to : '',
-    birth_date: data ? data.data.attributes.birth_date : '',
+    birth_date: data
+      ? !data.data.attributes.birth_date
+        ? '2000-01-01'
+        : moment(data.data.attributes.birth_date, 'DD-MM-YYYY').format('YYYY-MM-DD')
+      : '2000-01-01',
     representation: data ? data.data.attributes.representation : false,
     preferred_contact_method: data ? data.data.attributes.preferred_contact_method : '',
   };
@@ -91,26 +95,30 @@ const MyAccount = () => {
   };
 
   const updateAccountValidationScheme: yup.SchemaOf<IAccountUpdatePayload> = yup.object().shape({
-    email: yup.string().required(),
+    email: yup.string().email('Wrong email format').required('Email is required'),
     full_name: yup.string().required(),
     first_name: yup.string().required(),
     last_name: yup.string().required(),
-    gender: yup.string().required(),
-    contact_no: yup.string().required(),
+    gender: yup.string().nullable(),
+    contact_no: yup
+      .number()
+      .typeError('Contact number must be numbers only')
+      .positive('Contact number must be greater than zero')
+      .required('Contact number is required'),
     country: yup.string().required('Country is required'),
     country_code: yup.string().required('Country code is required'),
-    primary_type: yup.string(),
+    primary_type: yup.string().nullable(),
     adult_minor: yup.string(),
     state_region: yup.string().when('country', {
       is: (val: any) => handleStateLessCountries(val),
       then: yup.string().notRequired(),
       otherwise: yup.string().required('State is required'),
     }),
-    age_range_from: yup.string(),
-    age_range_to: yup.string(),
+    age_range_from: yup.string().nullable(),
+    age_range_to: yup.string().nullable(),
     birth_date: yup.string(),
     representation: yup.boolean().default(false),
-    preferred_contact_method: yup.string().default(''),
+    preferred_contact_method: yup.string().nullable(),
   });
 
   const handleSubmit = (values: IAccountUpdatePayload) => {
@@ -118,6 +126,10 @@ const MyAccount = () => {
       onSuccess: () => {
         queryClient.invalidateQueries('accounts');
         AlertOpen('success', 'Account details has been successfully updated');
+      },
+      onError: (e) => {
+        console.log(e);
+        AlertOpen('error', 'Error');
       },
     });
     if (passwordState.current_password) {
@@ -157,7 +169,12 @@ const MyAccount = () => {
           const errorResponseArray = errorResponseToArray(errors.response.data.errors);
           if (errorResponseArray.join(',') === 'current_password: incorrect password') {
             setPasswordMatch(false);
-            setPasswordState({ ...passwordState, new_password: '', new_password_confirmation: '' });
+            setPasswordState({
+              ...passwordState,
+              current_password: '',
+              new_password: '',
+              new_password_confirmation: '',
+            });
             setPasswordHelper("Password doesn't match");
           } else {
             setPasswordMatch(true);
@@ -192,9 +209,16 @@ const MyAccount = () => {
       form.setFieldValue('state_region', data.data.attributes.state_region);
       form.setFieldValue('age_range_from', data.data.attributes.age_range_from);
       form.setFieldValue('age_range_to', data.data.attributes.age_range_to);
-      form.setFieldValue('birth_date', moment(data.data.attributes.birth_date, 'DD-MM-YYYY').format('YYYY-MM-DD'));
-      form.setFieldValue('representation', data.data.attributes.representation);
-      form.setFieldValue('preferred_contact_method', data.data.attributes.preferred_contact_method);
+      form.setFieldValue(
+        'birth_date',
+        data
+          ? !data.data.attributes.birth_date
+            ? '2000-01-01'
+            : moment(data.data.attributes.birth_date, 'DD-MM-YYYY').format('YYYY-MM-DD')
+          : '2000-01-01',
+      );
+      form.setFieldValue('representation', data ? data.data.attributes.representation : '');
+      form.setFieldValue('preferred_contact_method', data ? data.data.attributes.preferred_contact_method : '');
 
       const newStates = statesList
         .filter((state) => state.countryCode === data?.data.attributes.country)
@@ -240,8 +264,15 @@ const MyAccount = () => {
                         InputProps={{ disableUnderline: true }}
                         InputLabelProps={{ shrink: true }}
                         name="first_name"
-                        value={form.values.first_name}
-                        onChange={form.handleChange}
+                        value={form.values.first_name ?? ''}
+                        onChange={(e) => {
+                          if (form.errors.first_name && !form.touched.first_name) {
+                            form.setFieldTouched('first_name');
+                            form.validateField('first_name');
+                          }
+                          form.handleChange(e);
+                        }}
+                        errorMessage={getErrorMessage(form.touched.first_name, form.errors.first_name)}
                       />
                     </Grid>
                     <Grid xs={12} md={6} item>
@@ -251,8 +282,15 @@ const MyAccount = () => {
                         InputProps={{ disableUnderline: true }}
                         InputLabelProps={{ shrink: true }}
                         name="last_name"
-                        value={form.values.last_name}
-                        onChange={form.handleChange}
+                        value={form.values.last_name ?? ''}
+                        onChange={(e) => {
+                          if (form.errors.last_name && !form.touched.last_name) {
+                            form.setFieldTouched('last_name');
+                            form.validateField('last_name');
+                          }
+                          form.handleChange(e);
+                        }}
+                        errorMessage={getErrorMessage(form.touched.last_name, form.errors.last_name)}
                       />
                     </Grid>
                     <Grid xs={12} md={6} item>
@@ -267,7 +305,7 @@ const MyAccount = () => {
                             form.setFieldValue('gender', e.target.value);
                             form.handleChange(e);
                           }}
-                          value={form.values.gender}
+                          value={form.values.gender ?? ''}
                           name="gender"
                         >
                           {gender.map((i) => (
@@ -296,24 +334,35 @@ const MyAccount = () => {
                         fullWidth
                         InputProps={{ disableUnderline: true }}
                         InputLabelProps={{ shrink: true }}
-                        value={form.values.email}
+                        value={form.values.email ?? ''}
                         name="email"
-                        onChange={form.handleChange}
+                        onChange={(e) => {
+                          if (form.errors.email && !form.touched.email) {
+                            form.setFieldTouched('email');
+                            form.validateField('email');
+                          }
+                          return form.handleChange(e);
+                        }}
+                        errorMessage={getErrorMessage(form.touched.email, form.errors.email)}
                       />
                     </Grid>
                     <Grid xs={12} md={6} item>
-                      <ContactInput
+                      <ContactInput2
                         handleCodeChange={(val: any) => {
                           form.setFieldValue('country_code', val);
                         }}
-                        country={form.values.country.toLowerCase()}
+                        countryCode={form.values.country_code ?? ''}
                         className={classes.contactInput}
                         name="contact_no"
                         onChange={(e) => {
-                          form.setFieldTouched('contact_no');
+                          if (form.errors.contact_no && !form.touched.contact_no) {
+                            form.setFieldTouched('contact_no');
+                            form.validateField('contact_no');
+                          }
                           return form.handleChange(e);
                         }}
-                        value={form.values.contact_no}
+                        errorMessage={getErrorMessage(form.touched.contact_no, form.errors.contact_no)}
+                        value={form.values.contact_no ?? ''}
                       />
                     </Grid>
                     <Grid xs={12} md={6} item>
@@ -336,7 +385,7 @@ const MyAccount = () => {
                         label="State/Region"
                         fullWidth
                         data={states}
-                        value={form.values.state_region}
+                        value={form.values.state_region ?? ''}
                         name="state_region"
                         onChange={(e) => {
                           form.setFieldValue('state_region', e.target.value);
@@ -366,7 +415,7 @@ const MyAccount = () => {
                           labelId={'lblType'}
                           disableUnderline
                           name="primary_type"
-                          value={form.values.primary_type}
+                          value={form.values.primary_type ?? ''}
                           onChange={(e) => {
                             form.setFieldValue('primary_type', e.target.value);
                             form.handleChange(e);
@@ -389,7 +438,7 @@ const MyAccount = () => {
                           labelId={'lblType'}
                           disableUnderline
                           name="adult_minor"
-                          value={form.values.adult_minor}
+                          value={form.values.adult_minor ?? ''}
                           onChange={(e) => {
                             form.setFieldValue('adult_minor', e.target.value);
                             form.handleChange(e);
@@ -415,7 +464,7 @@ const MyAccount = () => {
                                 InputProps={{ disableUnderline: true }}
                                 InputLabelProps={{ shrink: true }}
                                 name="birth_date"
-                                value={form.values.birth_date}
+                                value={form.values.birth_date ?? ''}
                                 onChange={(e) => {
                                   form.handleChange(e);
                                   form.setFieldValue('birth_date', e.target.value);
@@ -426,17 +475,17 @@ const MyAccount = () => {
                         </FormControl>
                       </Grid>
                     ) : (
-                      <Grid lg={6} xs={12} item>
+                      <Grid lg={6} md={6} xs={12} item>
                         <FormControl margin={'normal'} fullWidth>
                           <Grid container spacing={2}>
-                            <Grid lg={6} xs={6} item>
+                            <Grid lg={6} md={6} xs={6} item>
                               <FormControl fullWidth>
                                 <InputLabel id="lblAgeRange" shrink>
                                   Age Range From
                                 </InputLabel>
                                 <Select
                                   labelId={'lblType'}
-                                  value={form.values.age_range_from}
+                                  value={form.values.age_range_from ?? ''}
                                   onChange={(e) => {
                                     form.setFieldValue('age_range_from', e.target.value);
                                     form.handleChange(e);
@@ -447,12 +496,24 @@ const MyAccount = () => {
                                   {(() => {
                                     const ageRange = [];
 
-                                    for (let i = 18; i <= 120; i++) {
-                                      ageRange.push(
-                                        <MenuItem key={i} value={i}>
-                                          {i} years old
-                                        </MenuItem>,
-                                      );
+                                    if (form.values.age_range_to) {
+                                      const max = +form.values.age_range_to;
+                                      for (let i = 18; i <= max; i++) {
+                                        ageRange.push(
+                                          <MenuItem key={i} value={i}>
+                                            {i} years old
+                                          </MenuItem>,
+                                        );
+                                      }
+                                    } else {
+                                      const max = 120;
+                                      for (let i = 18; i <= max; i++) {
+                                        ageRange.push(
+                                          <MenuItem key={i} value={i}>
+                                            {i} years old
+                                          </MenuItem>,
+                                        );
+                                      }
                                     }
 
                                     return ageRange;
@@ -467,7 +528,7 @@ const MyAccount = () => {
                                 </InputLabel>
                                 <Select
                                   labelId={'lblType'}
-                                  value={form.values.age_range_to}
+                                  value={form.values.age_range_to ?? ''}
                                   onChange={(e) => {
                                     form.setFieldValue('age_range_to', e.target.value);
                                     form.handleChange(e);
@@ -478,12 +539,24 @@ const MyAccount = () => {
                                   {(() => {
                                     const ageRange = [];
 
-                                    for (let i = 18; i <= 120; i++) {
-                                      ageRange.push(
-                                        <MenuItem key={i} value={i}>
-                                          {i} years old
-                                        </MenuItem>,
-                                      );
+                                    if (form.values.age_range_from) {
+                                      const min = +form.values.age_range_from;
+                                      for (let i = min; i <= 120; i++) {
+                                        ageRange.push(
+                                          <MenuItem key={i} value={i}>
+                                            {i} years old
+                                          </MenuItem>,
+                                        );
+                                      }
+                                    } else {
+                                      const min = 18;
+                                      for (let i = min; i <= 120; i++) {
+                                        ageRange.push(
+                                          <MenuItem key={i} value={i}>
+                                            {i} years old
+                                          </MenuItem>,
+                                        );
+                                      }
                                     }
 
                                     return ageRange;
@@ -501,7 +574,7 @@ const MyAccount = () => {
                       <Checkbox
                         name="representation"
                         checked={form.values.representation}
-                        value={form.values.representation}
+                        value={form.values.representation ?? ''}
                         onChange={(e) => {
                           form.setFieldValue('representation', e.target.checked);
                           form.handleChange(e);
@@ -520,7 +593,7 @@ const MyAccount = () => {
                           labelId={'lblType'}
                           disableUnderline
                           name="preferred_contact_method"
-                          value={form.values.preferred_contact_method}
+                          value={form.values.preferred_contact_method ?? ''}
                           onChange={(e) => {
                             form.handleChange(e);
                             form.setFieldValue('preferred_contact_method', e.target.value);
@@ -556,7 +629,7 @@ const MyAccount = () => {
                           InputProps={{ disableUnderline: true }}
                           InputLabelProps={{ shrink: true }}
                           name="current_password"
-                          value={passwordState.current_password}
+                          value={passwordState.current_password ?? ''}
                           className={
                             !passwordState.current_password
                               ? ''
@@ -582,7 +655,7 @@ const MyAccount = () => {
                           InputProps={{ disableUnderline: true }}
                           InputLabelProps={{ shrink: true }}
                           name="new_password"
-                          value={passwordState.new_password}
+                          value={passwordState.new_password ?? ''}
                           onChange={(e) => {
                             form.handleChange(e);
                             setPasswordState({ ...passwordState, new_password: e.target.value });
@@ -599,7 +672,7 @@ const MyAccount = () => {
                           InputProps={{ disableUnderline: true }}
                           InputLabelProps={{ shrink: true }}
                           name="new_password_confirmation"
-                          value={passwordState.new_password_confirmation}
+                          value={passwordState.new_password_confirmation ?? ''}
                           onChange={(e) => {
                             form.handleChange(e);
                             setPasswordState({ ...passwordState, new_password_confirmation: e.target.value });
@@ -608,8 +681,8 @@ const MyAccount = () => {
                         />
                       </Grid>
                     </Grid>
-                    <Grid xs={12} md={6} lg={6} item className={classes.passwordPrinciples}>
-                      <PasswordStrength password={password_str} />
+                    <Grid xs={12} md={6} lg={6} item>
+                      <PasswordStrength password={passwordState.new_password} />
                     </Grid>
                   </Grid>
                 </CardContent>

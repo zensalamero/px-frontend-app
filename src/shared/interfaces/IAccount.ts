@@ -8,7 +8,7 @@ export interface IAccount {
         first_name: string;
         last_name: string;
         gender: string;
-        contact_no: string;
+        contact_no: number;
         country: string;
         country_code: string;
         state_region: string;
@@ -33,16 +33,16 @@ export interface IAccountUpdatePayload {
     full_name: string;
     first_name: string;
     last_name: string;
-    gender: string;
-    contact_no: string;
+    gender: string | undefined | null;
+    contact_no: number | null;
     country: string;
     country_code: string;
     state_region: string | undefined;
-    primary_type?: string;
+    primary_type?: string | undefined | null;
     adult_minor?: string;
-    age_range_from?: string;
-    age_range_to?: string;
+    age_range_from?: string | undefined | null;
+    age_range_to?: string | undefined | null;
     birth_date?: string;
     representation: boolean;
-    preferred_contact_method?: string;
+    preferred_contact_method?: string | undefined | null;
 }
