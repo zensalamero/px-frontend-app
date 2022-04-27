@@ -7,16 +7,6 @@ export const useStyles = makeStyles(() =>
       padding: '0 86px',
       marginTop: '16px',
     },
-    passwordPrinciples: {
-      '& h6': {
-        marginBottom: '30px',
-        color: '#707372',
-      },
-      '& p': {
-        marginTop: '5px',
-        color: '#707372',
-      },
-    },
     contactInput: {
       '& .react-tel-input': {
         '& .form-control': {
