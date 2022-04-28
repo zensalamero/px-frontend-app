@@ -144,7 +144,7 @@ const MyAccount = () => {
             const errorResponse = errorResponseArray.join(',');
             if (errorResponse === 'current_password: incorrect password') {
               AlertOpen('error', 'Incorrect Current Password');
-            } else if (errorResponse === "password_confirmation: doesn't match") {
+            } else if (errorResponse === "password_confirmation: doesn't match Password") {
               AlertOpen('error', 'Password must match');
             } else if (errorResponse === 'Password,password: is too short (minimum is 6 characters)') {
               AlertOpen('error', 'New Password is too short (minimum of 6 characters)');
