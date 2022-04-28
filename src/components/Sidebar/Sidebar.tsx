@@ -135,25 +135,27 @@ const Sidebar: React.FC<Props> = ({
             [classes.collapseContainerSmall]: isDrawerCollapse,
           })}
         >
-          <IconButton onClick={toggleDrawerCollapse}>
-            {isDrawerCollapse ? (
-              <ExpandIcon
-                width="48"
-                height="48"
-                viewBox="0 0 48 48"
-                style={{ width: 48, height: 48 }}
-                className={classes.collapseButton}
-              />
-            ) : (
-              <CollapseIcon
-                width="48"
-                height="48"
-                viewBox="0 0 48 48"
-                style={{ width: 48, height: 48 }}
-                className={classes.collapseButton}
-              />
-            )}
-          </IconButton>
+          <Hidden xsDown implementation="css">
+            <IconButton onClick={toggleDrawerCollapse}>
+              {isDrawerCollapse ? (
+                <ExpandIcon
+                  width="48"
+                  height="48"
+                  viewBox="0 0 48 48"
+                  style={{ width: 48, height: 48 }}
+                  className={classes.collapseButton}
+                />
+              ) : (
+                <CollapseIcon
+                  width="48"
+                  height="48"
+                  viewBox="0 0 48 48"
+                  style={{ width: 48, height: 48 }}
+                  className={classes.collapseButton}
+                />
+              )}
+            </IconButton>
+          </Hidden>
         </div>
         <div>
           <Box className={classes.myAccountContent}>
@@ -173,7 +175,7 @@ const Sidebar: React.FC<Props> = ({
                   padding: '20px',
                 }}
                 className={clsx({
-                  [classes.hidden]: isDrawerCollapse,
+                  [classes.hidden]: isMobileDrawerOpen ? false : isDrawerCollapse,
                 })}
               >
                 <Link to={`${ROUTES.TALENT.SETTINGS}/myAccount`} style={{ textDecoration: 'none' }}>
@@ -232,17 +234,16 @@ const Sidebar: React.FC<Props> = ({
       <Hidden xsUp implementation="css">
         <Drawer
           variant="temporary"
-          anchor={theme.direction === 'rtl' ? 'right' : 'left'}
           open={isMobileDrawerOpen}
           onClose={handleMobileDrawer}
           className={clsx(classes.drawer, {
-            [classes.drawerOpen]: !isDrawerCollapse,
-            [classes.drawerClose]: isDrawerCollapse,
+            [classes.drawerOpen]: isMobileDrawerOpen,
+            [classes.drawerClose]: !isMobileDrawerOpen,
           })}
           classes={{
             paper: clsx({
-              [classes.drawerOpen]: !isDrawerCollapse,
-              [classes.drawerClose]: isDrawerCollapse,
+              [classes.drawerOpen]: isMobileDrawerOpen,
+              [classes.drawerClose]: !isMobileDrawerOpen,
             }),
           }}
           ModalProps={{
