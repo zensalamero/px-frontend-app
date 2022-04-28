@@ -40,15 +40,15 @@ export interface ITalentBiographyResponsePayload extends ICommonCreateResponsePa
 }
 
 export interface IStatisticsValues {
-  region?: string;
-  adult_minor?: string;
-  metric_system?: string;
-  gender?: string;
-  hair_color?: string;
-  eye_color?: string;
-  complexion?: string;
-  height_cm?: string;
-  height_in?: string;
+  region?: string | undefined | null;
+  adult_minor?: string | undefined | null;
+  metric_system?: string | undefined | null;
+  gender?: string | undefined | null;
+  hair_color?: string | undefined | null;
+  eye_color?: string | undefined | null;
+  complexion?: string | undefined | null;
+  height_cm?: string | undefined | null;
+  height_in?: string | undefined | null;
   hat_in?: string;
   hat_cm?: string;
   weight_kg?: string;

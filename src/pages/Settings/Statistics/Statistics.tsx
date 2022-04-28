@@ -79,7 +79,7 @@ const Statistics = () => {
   const handleOpenConfirmationDialog = () => setIsConfirmationDialog(true);
   const handleCloseConfirmationDialog = () => setIsConfirmationDialog(false);
 
-  const [ethncitiyData, setEthnicityData] = useState(data ? data.data.attributes.statistics.ethnicity : []);
+  // const [ethncitiyData, setEthnicityData] = useState(data ? data.data.attributes.statistics.ethnicity : []);
 
   const initialValues: ITalentUpdatePayload = {
     statistics: {
@@ -121,36 +121,36 @@ const Statistics = () => {
     resume_show_year: yup.boolean(),
     biography: yup.string(),
     statistics: yup.object().shape({
-      region: yup.string()!,
-      adult_minor: yup.string(),
-      metric_system: yup.string(),
-      gender: yup.string(),
-      hair_color: yup.string(),
-      eye_color: yup.string(),
-      complexion: yup.string(),
-      height_cm: yup.string(),
-      height_in: yup.string(),
-      waist_cm: yup.string(),
-      waist_in: yup.string(),
-      suit_size: yup.string(),
-      weight_kg: yup.string(),
-      weight_lb: yup.string(),
-      hat_cm: yup.string(),
-      hat_in: yup.string(),
-      chest_size_cm: yup.string(),
-      chest_size_in: yup.string(),
-      collar_size_cm: yup.string(),
-      collar_size_in: yup.string(),
-      inside_leg_cm: yup.string(),
-      inside_leg_in: yup.string(),
-      outside_leg_cm: yup.string(),
-      outside_leg_in: yup.string(),
-      shoe_size: yup.string(),
-      t_shirt_size: yup.string(),
-      hip_size_cm: yup.string(),
-      hip_size_in: yup.string(),
-      ethnicity: yup.array(),
-      other_talent_types: yup.array(),
+      region: yup.string().notRequired().nullable(),
+      adult_minor: yup.string().notRequired(),
+      metric_system: yup.string().notRequired(),
+      gender: yup.string().notRequired(),
+      hair_color: yup.string().notRequired(),
+      eye_color: yup.string().notRequired(),
+      complexion: yup.string().notRequired(),
+      height_cm: yup.string().notRequired(),
+      height_in: yup.string().notRequired(),
+      waist_cm: yup.string().notRequired(),
+      waist_in: yup.string().notRequired(),
+      suit_size: yup.string().notRequired(),
+      weight_kg: yup.string().notRequired(),
+      weight_lb: yup.string().notRequired(),
+      hat_cm: yup.string().notRequired(),
+      hat_in: yup.string().notRequired(),
+      chest_size_cm: yup.string().notRequired(),
+      chest_size_in: yup.string().notRequired(),
+      collar_size_cm: yup.string().notRequired(),
+      collar_size_in: yup.string().notRequired(),
+      inside_leg_cm: yup.string().notRequired(),
+      inside_leg_in: yup.string().notRequired(),
+      outside_leg_cm: yup.string().notRequired(),
+      outside_leg_in: yup.string().notRequired(),
+      shoe_size: yup.string().notRequired(),
+      t_shirt_size: yup.string().notRequired(),
+      hip_size_cm: yup.string().notRequired(),
+      hip_size_in: yup.string().notRequired(),
+      ethnicity: yup.array().notRequired(),
+      other_talent_types: yup.array().notRequired(),
     }),
   });
 
@@ -237,10 +237,10 @@ const Statistics = () => {
     value: string;
   }
 
-  const onEthnicityChipDelete = (e: ChipData) => () => {
-    setEthnicityData((chips: any) => chips.filter((chip: any) => chip.id !== e.id));
-    console.log(e);
-  };
+  // const onEthnicityChipDelete = (e: ChipData) => () => {
+  //   setEthnicityData((chips: any) => chips.filter((chip: any) => chip.id !== e.id));
+  //   console.log(e);
+  // };
 
   const onTalentChipDelete = (e: ChipData) => () => {
     form.setFieldValue('statistics.other_talent_types', (chips: any) => chips.filter((chip: any) => chip.id !== e.id));
@@ -1512,7 +1512,7 @@ const Statistics = () => {
                                 key={v.name}
                                 label={v.name}
                                 onDelete={(e) => {
-                                  onEthnicityChipDelete(v);
+                                  // onEthnicityChipDelete(v);
                                 }}
                                 onMouseDown={(event) => {
                                   event.stopPropagation();

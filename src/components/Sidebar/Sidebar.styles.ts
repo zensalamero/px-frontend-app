@@ -34,6 +34,9 @@ export const useStyles = makeStyles((theme: Theme) =>
       width: drawerWidth,
       flexShrink: 0,
       whiteSpace: 'nowrap',
+      '& .MuiList-root': {
+        overflow: 'auto',
+      },
     },
     drawerPaper: {
       width: drawerWidth,
