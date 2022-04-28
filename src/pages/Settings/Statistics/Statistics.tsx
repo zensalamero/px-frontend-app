@@ -83,36 +83,36 @@ const Statistics = () => {
 
   const initialValues: ITalentUpdatePayload = {
     statistics: {
-      region: data ? data.data.attributes.statistics.region : '',
-      adult_minor: data ? data.data.attributes.statistics.adult_minor : '',
-      metric_system: data ? data.data.attributes.statistics.metric_system : '',
-      gender: data ? data.data.attributes.statistics.gender : '',
-      hair_color: data ? data.data.attributes.statistics.hair_color : '',
-      eye_color: data ? data.data.attributes.statistics.eye_color : '',
-      complexion: data ? data.data.attributes.statistics.complexion : '',
-      height_cm: data ? data.data.attributes.statistics.height_cm : '',
-      height_in: data ? data.data.attributes.statistics.height_in : '',
-      hat_cm: data ? data.data.attributes.statistics.hat_cm : '',
-      hat_in: data ? data.data.attributes.statistics.hat_in : '',
-      waist_cm: data ? data.data.attributes.statistics.waist_cm : '',
-      waist_in: data ? data.data.attributes.statistics.waist_in : '',
-      weight_kg: data ? data.data.attributes.statistics.weight_kg : '',
-      weight_lb: data ? data.data.attributes.statistics.weight_lb : '',
-      suit_size: data ? data.data.attributes.statistics.suit_size : '',
-      chest_size_cm: data ? data.data.attributes.statistics.chest_size_cm : '',
-      chest_size_in: data ? data.data.attributes.statistics.chest_size_in : '',
-      collar_size_cm: data ? data.data.attributes.statistics.collar_size_cm : '',
-      collar_size_in: data ? data.data.attributes.statistics.collar_size_in : '',
-      inside_leg_cm: data ? data.data.attributes.statistics.inside_leg_cm : '',
-      inside_leg_in: data ? data.data.attributes.statistics.inside_leg_in : '',
-      outside_leg_cm: data ? data.data.attributes.statistics.outside_leg_cm : '',
-      outside_leg_in: data ? data.data.attributes.statistics.outside_leg_in : '',
-      shoe_size: data ? data.data.attributes.statistics.shoe_size : '',
-      t_shirt_size: data ? data.data.attributes.statistics.t_shirt_size : '',
-      hip_size_cm: data ? data.data.attributes.statistics.hip_size_cm : '',
-      hip_size_in: data ? data.data.attributes.statistics.hip_size_in : '',
-      ethnicity: data ? data.data.attributes.statistics.ethnicity : [''],
-      other_talent_types: data ? data.data.attributes.statistics.other_talent_types : [''],
+      region: data?.data.attributes.statistics ? data.data.attributes.statistics.region : '',
+      adult_minor: data?.data.attributes.statistics ? data.data.attributes.statistics.adult_minor : '',
+      metric_system: data?.data.attributes.statistics ? data.data.attributes.statistics.metric_system : '',
+      gender: data?.data.attributes.statistics ? data.data.attributes.statistics.gender : '',
+      hair_color: data?.data.attributes.statistics ? data.data.attributes.statistics.hair_color : '',
+      eye_color: data?.data.attributes.statistics ? data.data.attributes.statistics.eye_color : '',
+      complexion: data?.data.attributes.statistics ? data.data.attributes.statistics.complexion : '',
+      height_cm: data?.data.attributes.statistics ? data.data.attributes.statistics.height_cm : '',
+      height_in: data?.data.attributes.statistics ? data.data.attributes.statistics.height_in : '',
+      hat_cm: data?.data.attributes.statistics ? data.data.attributes.statistics.hat_cm : '',
+      hat_in: data?.data.attributes.statistics ? data.data.attributes.statistics.hat_in : '',
+      waist_cm: data?.data.attributes.statistics ? data.data.attributes.statistics.waist_cm : '',
+      waist_in: data?.data.attributes.statistics ? data.data.attributes.statistics.waist_in : '',
+      weight_kg: data?.data.attributes.statistics ? data.data.attributes.statistics.weight_kg : '',
+      weight_lb: data?.data.attributes.statistics ? data.data.attributes.statistics.weight_lb : '',
+      suit_size: data?.data.attributes.statistics ? data.data.attributes.statistics.suit_size : '',
+      chest_size_cm: data?.data.attributes.statistics ? data.data.attributes.statistics.chest_size_cm : '',
+      chest_size_in: data?.data.attributes.statistics ? data.data.attributes.statistics.chest_size_in : '',
+      collar_size_cm: data?.data.attributes.statistics ? data.data.attributes.statistics.collar_size_cm : '',
+      collar_size_in: data?.data.attributes.statistics ? data.data.attributes.statistics.collar_size_in : '',
+      inside_leg_cm: data?.data.attributes.statistics ? data.data.attributes.statistics.inside_leg_cm : '',
+      inside_leg_in: data?.data.attributes.statistics ? data.data.attributes.statistics.inside_leg_in : '',
+      outside_leg_cm: data?.data.attributes.statistics ? data.data.attributes.statistics.outside_leg_cm : '',
+      outside_leg_in: data?.data.attributes.statistics ? data.data.attributes.statistics.outside_leg_in : '',
+      shoe_size: data?.data.attributes.statistics ? data.data.attributes.statistics.shoe_size : '',
+      t_shirt_size: data?.data.attributes.statistics ? data.data.attributes.statistics.t_shirt_size : '',
+      hip_size_cm: data?.data.attributes.statistics ? data.data.attributes.statistics.hip_size_cm : '',
+      hip_size_in: data?.data.attributes.statistics ? data.data.attributes.statistics.hip_size_in : '',
+      ethnicity: data?.data.attributes.statistics ? data.data.attributes.statistics.ethnicity : [],
+      other_talent_types: data?.data.attributes.statistics ? data.data.attributes.statistics.other_talent_types : [],
     },
   };
 
@@ -170,40 +170,38 @@ const Statistics = () => {
     enableReinitialize: true,
   });
 
-  console.log(form);
-
   useEffect(() => {
-    if (data) {
-      form.setFieldValue('attributes.region', data.data.attributes.statistics.region);
-      form.setFieldValue('attributes.adult_minor', data.data.attributes.statistics.adult_minor);
-      form.setFieldValue('attributes.metric_system', data.data.attributes.statistics.metric_system);
-      form.setFieldValue('attributes.gender', data.data.attributes.statistics.gender);
-      form.setFieldValue('attributes.hair_color', data.data.attributes.statistics.hair_color);
-      form.setFieldValue('attributes.eye_color', data.data.attributes.statistics.eye_color);
-      form.setFieldValue('attributes.complexion', data.data.attributes.statistics.complexion);
-      form.setFieldValue('attributes.height_cm', data.data.attributes.statistics.height_cm);
-      form.setFieldValue('attributes.height_in', data.data.attributes.statistics.height_in);
-      form.setFieldValue('attributes.hat_cm', data.data.attributes.statistics.hat_cm);
-      form.setFieldValue('attributes.hat_in', data.data.attributes.statistics.hat_in);
-      form.setFieldValue('attributes.waist_cm', data.data.attributes.statistics.waist_cm);
-      form.setFieldValue('attributes.waist_in', data.data.attributes.statistics.waist_in);
-      form.setFieldValue('attributes.weight_kg', data.data.attributes.statistics.weight_kg);
-      form.setFieldValue('attributes.weight_lb', data.data.attributes.statistics.weight_lb);
-      form.setFieldValue('attributes.suit_size', data.data.attributes.statistics.suit_size);
-      form.setFieldValue('attributes.chest_size_cm', data.data.attributes.statistics.chest_size_cm);
-      form.setFieldValue('attributes.chest_size_in', data.data.attributes.statistics.chest_size_in);
-      form.setFieldValue('attributes.collar_size_cm', data.data.attributes.statistics.collar_size_cm);
-      form.setFieldValue('attributes.collar_size_in', data.data.attributes.statistics.collar_size_in);
-      form.setFieldValue('attributes.inside_leg_cm', data.data.attributes.statistics.inside_leg_cm);
-      form.setFieldValue('attributes.inside_leg_in', data.data.attributes.statistics.inside_leg_in);
-      form.setFieldValue('attributes.outside_leg_in', data.data.attributes.statistics.outside_leg_in);
-      form.setFieldValue('attributes.outside_leg_cm', data.data.attributes.statistics.outside_leg_cm);
-      form.setFieldValue('attributes.shoe_size', data.data.attributes.statistics.shoe_size);
-      form.setFieldValue('attributes.t_shirt_size', data.data.attributes.statistics.t_shirt_size);
-      form.setFieldValue('attributes.hip_size_cm', data.data.attributes.statistics.hip_size_cm);
-      form.setFieldValue('attributes.hip_size_in', data.data.attributes.statistics.hip_size_in);
-      form.setFieldValue('attributes.ethnicity', data.data.attributes.statistics.ethnicity);
-      form.setFieldValue('attributes.other_talent_types', data.data.attributes.statistics.other_talent_types);
+    if (data?.data.attributes.statistics) {
+      form.setFieldValue('attributes.region', data.data.attributes.statistics.region ?? '');
+      form.setFieldValue('attributes.adult_minor', data.data.attributes.statistics.adult_minor ?? '');
+      form.setFieldValue('attributes.metric_system', data.data.attributes.statistics.metric_system ?? '');
+      form.setFieldValue('attributes.gender', data.data.attributes.statistics.gender ?? '');
+      form.setFieldValue('attributes.hair_color', data.data.attributes.statistics.hair_color ?? '');
+      form.setFieldValue('attributes.eye_color', data.data.attributes.statistics.eye_color ?? '');
+      form.setFieldValue('attributes.complexion', data.data.attributes.statistics.complexion ?? '');
+      form.setFieldValue('attributes.height_cm', data.data.attributes.statistics.height_cm ?? '');
+      form.setFieldValue('attributes.height_in', data.data.attributes.statistics.height_in ?? '');
+      form.setFieldValue('attributes.hat_cm', data.data.attributes.statistics.hat_cm ?? '');
+      form.setFieldValue('attributes.hat_in', data.data.attributes.statistics.hat_in ?? '');
+      form.setFieldValue('attributes.waist_cm', data.data.attributes.statistics.waist_cm ?? '');
+      form.setFieldValue('attributes.waist_in', data.data.attributes.statistics.waist_in ?? '');
+      form.setFieldValue('attributes.weight_kg', data.data.attributes.statistics.weight_kg ?? '');
+      form.setFieldValue('attributes.weight_lb', data.data.attributes.statistics.weight_lb ?? '');
+      form.setFieldValue('attributes.suit_size', data.data.attributes.statistics.suit_size ?? '');
+      form.setFieldValue('attributes.chest_size_cm', data.data.attributes.statistics.chest_size_cm ?? '');
+      form.setFieldValue('attributes.chest_size_in', data.data.attributes.statistics.chest_size_in ?? '');
+      form.setFieldValue('attributes.collar_size_cm', data.data.attributes.statistics.collar_size_cm ?? '');
+      form.setFieldValue('attributes.collar_size_in', data.data.attributes.statistics.collar_size_in ?? '');
+      form.setFieldValue('attributes.inside_leg_cm', data.data.attributes.statistics.inside_leg_cm ?? '');
+      form.setFieldValue('attributes.inside_leg_in', data.data.attributes.statistics.inside_leg_in ?? '');
+      form.setFieldValue('attributes.outside_leg_in', data.data.attributes.statistics.outside_leg_in ?? '');
+      form.setFieldValue('attributes.outside_leg_cm', data.data.attributes.statistics.outside_leg_cm ?? '');
+      form.setFieldValue('attributes.shoe_size', data.data.attributes.statistics.shoe_size ?? '');
+      form.setFieldValue('attributes.t_shirt_size', data.data.attributes.statistics.t_shirt_size ?? '');
+      form.setFieldValue('attributes.hip_size_cm', data.data.attributes.statistics.hip_size_cm ?? '');
+      form.setFieldValue('attributes.hip_size_in', data.data.attributes.statistics.hip_size_in ?? '');
+      form.setFieldValue('attributes.ethnicity', data.data.attributes.statistics?.ethnicity ?? []);
+      form.setFieldValue('attributes.other_talent_types', data.data.attributes.statistics.other_talent_types ?? []);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
@@ -237,10 +235,10 @@ const Statistics = () => {
     value: string;
   }
 
-  // const onEthnicityChipDelete = (e: ChipData) => () => {
-  //   setEthnicityData((chips: any) => chips.filter((chip: any) => chip.id !== e.id));
-  //   console.log(e);
-  // };
+  // console.log(form);
+  const onEthnicityChipDelete = (e: ChipData) => () => {
+    console.log(e);
+  };
 
   const onTalentChipDelete = (e: ChipData) => () => {
     form.setFieldValue('statistics.other_talent_types', (chips: any) => chips.filter((chip: any) => chip.id !== e.id));
@@ -437,7 +435,7 @@ const Statistics = () => {
                         </Grid>
                         <Grid xs={12} md={6} lg={2} item>
                           <FormControl margin={'normal'} fullWidth>
-                            {data?.data.attributes.statistics.metric_system === 'Imperial/Metric' ? (
+                            {form.values.statistics?.metric_system === 'Imperial/Metric' ? (
                               <Grid container spacing={2}>
                                 <Grid xs={6} md={6} item>
                                   <InputNumber
@@ -478,9 +476,14 @@ const Statistics = () => {
                                 <Grid xs={12} md={12} item>
                                   <InputNumber
                                     label={'Height'}
+                                    fullWidth
                                     InputProps={{
                                       disableUnderline: true,
-                                      endAdornment: <InputAdornment position="end">cm</InputAdornment>,
+                                      endAdornment: (
+                                        <InputAdornment position="end">
+                                          {form.values.statistics?.metric_system === 'Imperial' ? 'in' : 'cm'}
+                                        </InputAdornment>
+                                      ),
                                       inputProps: { min: 0 },
                                     }}
                                     InputLabelProps={{ shrink: true }}
@@ -488,7 +491,11 @@ const Statistics = () => {
                                       form.handleChange(e);
                                     }}
                                     name="statistics.height_cm"
-                                    value={form.values.statistics?.height_cm}
+                                    value={
+                                      form.values.statistics?.metric_system === 'Imperial'
+                                        ? form.values.statistics?.height_in
+                                        : form.values.statistics?.height_cm
+                                    }
                                   />
                                 </Grid>
                               </Grid>
@@ -538,9 +545,14 @@ const Statistics = () => {
                                 <Grid xs={12} md={12} item>
                                   <InputNumber
                                     label={'Waist Size'}
+                                    fullWidth
                                     InputProps={{
                                       disableUnderline: true,
-                                      endAdornment: <InputAdornment position="end">cm</InputAdornment>,
+                                      endAdornment: (
+                                        <InputAdornment position="end">
+                                          {form.values.statistics?.metric_system === 'Imperial' ? 'in' : 'cm'}
+                                        </InputAdornment>
+                                      ),
                                       inputProps: { min: 0 },
                                     }}
                                     InputLabelProps={{ shrink: true }}
@@ -548,7 +560,11 @@ const Statistics = () => {
                                       form.handleChange(e);
                                     }}
                                     name="statistics.waist_cm"
-                                    value={form.values.statistics?.waist_cm}
+                                    value={
+                                      form.values.statistics?.metric_system === 'Imperial'
+                                        ? form.values.statistics?.waist_in
+                                        : form.values.statistics?.waist_cm
+                                    }
                                   />
                                 </Grid>
                               </Grid>
@@ -599,10 +615,15 @@ const Statistics = () => {
                               <Grid container spacing={2}>
                                 <Grid xs={12} md={12} item>
                                   <InputNumber
+                                    fullWidth
                                     label={'Hat Size'}
                                     InputProps={{
                                       disableUnderline: true,
-                                      endAdornment: <InputAdornment position="end">cm</InputAdornment>,
+                                      endAdornment: (
+                                        <InputAdornment position="end">
+                                          {form.values.statistics?.metric_system === 'Imperial' ? 'in' : 'cm'}
+                                        </InputAdornment>
+                                      ),
                                       inputProps: { min: 0 },
                                     }}
                                     InputLabelProps={{ shrink: true }}
@@ -610,7 +631,11 @@ const Statistics = () => {
                                       form.handleChange(e);
                                     }}
                                     name="statistics.hat_cm"
-                                    value={form.values.statistics?.hat_cm}
+                                    value={
+                                      form.values.statistics?.metric_system === 'Imperial'
+                                        ? form.values.statistics?.hat_in
+                                        : form.values.statistics?.hat_cm
+                                    }
                                   />
                                 </Grid>
                               </Grid>
@@ -660,9 +685,14 @@ const Statistics = () => {
                                 <Grid xs={12} md={12} item>
                                   <InputNumber
                                     label={'Weight'}
+                                    fullWidth
                                     InputProps={{
                                       disableUnderline: true,
-                                      endAdornment: <InputAdornment position="end">kg</InputAdornment>,
+                                      endAdornment: (
+                                        <InputAdornment position="end">
+                                          {form.values.statistics?.metric_system === 'Imperial' ? 'lb' : 'kg'}
+                                        </InputAdornment>
+                                      ),
                                       inputProps: { min: 0 },
                                     }}
                                     InputLabelProps={{ shrink: true }}
@@ -670,7 +700,11 @@ const Statistics = () => {
                                       form.handleChange(e);
                                     }}
                                     name="statistics.weight_kg"
-                                    value={form.values.statistics?.weight_kg}
+                                    value={
+                                      form.values.statistics?.metric_system === 'Imperial'
+                                        ? form.values.statistics?.weight_lb
+                                        : form.values.statistics?.weight_kg
+                                    }
                                   />
                                 </Grid>
                               </Grid>
@@ -680,7 +714,7 @@ const Statistics = () => {
                         <Grid xs={12} md={6} lg={2} item>
                           <FormControl margin={'normal'} fullWidth>
                             <InputLabel id="labelAgeType" shrink>
-                              Kid Clothing
+                              Kids Clothing
                             </InputLabel>
                             <Select
                               labelId={'lblType'}
@@ -745,9 +779,14 @@ const Statistics = () => {
                                 <Grid xs={12} md={12} item>
                                   <InputNumber
                                     label={'Inside Leg'}
+                                    fullWidth
                                     InputProps={{
                                       disableUnderline: true,
-                                      endAdornment: <InputAdornment position="end">cm</InputAdornment>,
+                                      endAdornment: (
+                                        <InputAdornment position="end">
+                                          {form.values.statistics?.metric_system === 'Imperial' ? 'in' : 'cm'}
+                                        </InputAdornment>
+                                      ),
                                       inputProps: { min: 0 },
                                     }}
                                     InputLabelProps={{ shrink: true }}
@@ -755,7 +794,11 @@ const Statistics = () => {
                                       form.handleChange(e);
                                     }}
                                     name="statistics.inside_leg_cm"
-                                    value={form.values.statistics?.inside_leg_cm}
+                                    value={
+                                      form.values.statistics?.metric_system === 'Imperial'
+                                        ? form.values.statistics?.inside_leg_in
+                                        : form.values.statistics?.inside_leg_cm
+                                    }
                                   />
                                 </Grid>
                               </Grid>
@@ -805,9 +848,14 @@ const Statistics = () => {
                                 <Grid xs={12} md={12} item>
                                   <InputNumber
                                     label={'Outside Leg'}
+                                    fullWidth
                                     InputProps={{
                                       disableUnderline: true,
-                                      endAdornment: <InputAdornment position="end">cm</InputAdornment>,
+                                      endAdornment: (
+                                        <InputAdornment position="end">
+                                          {form.values.statistics?.metric_system === 'Imperial' ? 'in' : 'cm'}
+                                        </InputAdornment>
+                                      ),
                                       inputProps: { min: 0 },
                                     }}
                                     InputLabelProps={{ shrink: true }}
@@ -815,36 +863,15 @@ const Statistics = () => {
                                       form.handleChange(e);
                                     }}
                                     name="statistics.outside_leg_cm"
-                                    value={form.values.statistics?.outside_leg_cm}
+                                    value={
+                                      form.values.statistics?.metric_system === 'Imperial'
+                                        ? form.values.statistics?.outside_leg_in
+                                        : form.values.statistics?.outside_leg_cm
+                                    }
                                   />
                                 </Grid>
                               </Grid>
                             )}
-                          </FormControl>
-                        </Grid>
-                      </Grid>
-                      <Grid container className={classes.profileItemsContainer} spacing={2}>
-                        <Grid xs={12} md={6} lg={2} item>
-                          <FormControl margin={'normal'} fullWidth>
-                            <InputLabel id="labelAgeType" shrink>
-                              T-Shirt Size
-                            </InputLabel>
-                            <Select
-                              labelId={'lblType'}
-                              disableUnderline
-                              onChange={(e) => {
-                                form.handleChange(e);
-                                form.setFieldValue('statistics.t_shirt_size', e.target.value);
-                              }}
-                              name="statistics.t_shirt_size"
-                              value={form.values.statistics?.t_shirt_size}
-                            >
-                              {tshirtSize.map((i) => (
-                                <MenuItem key={i.key} value={i.value}>
-                                  {i.value}
-                                </MenuItem>
-                              ))}
-                            </Select>
                           </FormControl>
                         </Grid>
                       </Grid>
@@ -966,7 +993,11 @@ const Statistics = () => {
                                     label={'Height'}
                                     InputProps={{
                                       disableUnderline: true,
-                                      endAdornment: <InputAdornment position="end">cm</InputAdornment>,
+                                      endAdornment: (
+                                        <InputAdornment position="end">
+                                          {form.values.statistics?.metric_system === 'Imperial' ? 'in' : 'cm'}
+                                        </InputAdornment>
+                                      ),
                                       inputProps: { min: 0 },
                                     }}
                                     InputLabelProps={{ shrink: true }}
@@ -974,7 +1005,11 @@ const Statistics = () => {
                                       form.handleChange(e);
                                     }}
                                     name="statistics.height_cm"
-                                    value={form.values.statistics?.height_cm}
+                                    value={
+                                      form.values.statistics?.metric_system === 'Imperial'
+                                        ? form.values.statistics?.height_in
+                                        : form.values.statistics?.height_cm
+                                    }
                                   />
                                 </Grid>
                               </Grid>
@@ -1026,7 +1061,11 @@ const Statistics = () => {
                                     label={'Waist'}
                                     InputProps={{
                                       disableUnderline: true,
-                                      endAdornment: <InputAdornment position="end">cm</InputAdornment>,
+                                      endAdornment: (
+                                        <InputAdornment position="end">
+                                          {form.values.statistics?.metric_system === 'Imperial' ? 'in' : 'cm'}
+                                        </InputAdornment>
+                                      ),
                                       inputProps: { min: 0 },
                                     }}
                                     InputLabelProps={{ shrink: true }}
@@ -1034,7 +1073,11 @@ const Statistics = () => {
                                       form.handleChange(e);
                                     }}
                                     name="statistics.waist_cm"
-                                    value={form.values.statistics?.waist_cm}
+                                    value={
+                                      form.values.statistics?.metric_system === 'Imperial'
+                                        ? form.values.statistics?.waist_in
+                                        : form.values.statistics?.waist_cm
+                                    }
                                   />
                                 </Grid>
                               </Grid>
@@ -1135,13 +1178,21 @@ const Statistics = () => {
                                     label={'Weight'}
                                     InputProps={{
                                       disableUnderline: true,
-                                      endAdornment: <InputAdornment position="end">kg</InputAdornment>,
+                                      endAdornment: (
+                                        <InputAdornment position="end">
+                                          {form.values.statistics?.metric_system === 'Imperial' ? 'lb' : 'kg'}
+                                        </InputAdornment>
+                                      ),
                                       inputProps: { min: 0 },
                                     }}
                                     InputLabelProps={{ shrink: true }}
                                     onChange={form.handleChange}
                                     name="statistics.weight_kg"
-                                    value={form.values.statistics?.weight_kg}
+                                    value={
+                                      form.values.statistics?.metric_system === 'Imperial'
+                                        ? form.values.statistics?.weight_lb
+                                        : form.values.statistics?.weight_kg
+                                    }
                                   />
                                 </Grid>
                               </Grid>
@@ -1193,13 +1244,21 @@ const Statistics = () => {
                                     label={'Collar Size'}
                                     InputProps={{
                                       disableUnderline: true,
-                                      endAdornment: <InputAdornment position="end">cm</InputAdornment>,
+                                      endAdornment: (
+                                        <InputAdornment position="end">
+                                          {form.values.statistics?.metric_system === 'Imperial' ? 'in' : 'cm'}
+                                        </InputAdornment>
+                                      ),
                                       inputProps: { min: 0 },
                                     }}
                                     InputLabelProps={{ shrink: true }}
                                     onChange={form.handleChange}
                                     name="statistics.collar_size_cm"
-                                    value={form.values.statistics?.collar_size_cm}
+                                    value={
+                                      form.values.statistics?.metric_system === 'Imperial'
+                                        ? form.values.statistics?.collar_size_in
+                                        : form.values.statistics?.collar_size_cm
+                                    }
                                   />
                                 </Grid>
                               </Grid>
@@ -1251,13 +1310,21 @@ const Statistics = () => {
                                     label={'Inside Leg'}
                                     InputProps={{
                                       disableUnderline: true,
-                                      endAdornment: <InputAdornment position="end">cm</InputAdornment>,
+                                      endAdornment: (
+                                        <InputAdornment position="end">
+                                          {form.values.statistics?.metric_system === 'Imperial' ? 'in' : 'cm'}
+                                        </InputAdornment>
+                                      ),
                                       inputProps: { min: 0 },
                                     }}
                                     InputLabelProps={{ shrink: true }}
                                     onChange={form.handleChange}
                                     name="statistics.inside_leg_cm"
-                                    value={form.values.statistics?.inside_leg_cm}
+                                    value={
+                                      form.values.statistics?.metric_system === 'Imperial'
+                                        ? form.values.statistics?.inside_leg_in
+                                        : form.values.statistics?.inside_leg_cm
+                                    }
                                   />
                                 </Grid>
                               </Grid>
@@ -1309,12 +1376,20 @@ const Statistics = () => {
                                     label={'Outside Leg'}
                                     InputProps={{
                                       disableUnderline: true,
-                                      endAdornment: <InputAdornment position="end">cm</InputAdornment>,
+                                      endAdornment: (
+                                        <InputAdornment position="end">
+                                          {form.values.statistics?.metric_system === 'Imperial' ? 'in' : 'cm'}
+                                        </InputAdornment>
+                                      ),
                                     }}
                                     InputLabelProps={{ shrink: true }}
                                     onChange={form.handleChange}
                                     name="statistics.outside_leg_cm"
-                                    value={form.values.statistics?.outside_leg_cm}
+                                    value={
+                                      form.values.statistics?.metric_system === 'Imperial'
+                                        ? form.values.statistics?.outside_leg_in
+                                        : form.values.statistics?.outside_leg_cm
+                                    }
                                   />
                                 </Grid>
                               </Grid>
@@ -1511,11 +1586,8 @@ const Statistics = () => {
                               <Chip
                                 key={v.name}
                                 label={v.name}
-                                onDelete={(e) => {
-                                  // onEthnicityChipDelete(v);
-                                }}
-                                onMouseDown={(event) => {
-                                  event.stopPropagation();
+                                onDelete={() => {
+                                  onEthnicityChipDelete(v);
                                 }}
                               />
                             ))

@@ -42,7 +42,7 @@ export const useStyles = makeStyles(() =>
     chipContainer: {
       margin: '10px 0 0',
       '& .MuiChip-root': {
-        marginRight: '5px',
+        margin: '0 5px 5px 0',
       },
     },
   }),
