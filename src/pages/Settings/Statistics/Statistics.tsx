@@ -111,8 +111,8 @@ const Statistics = () => {
       t_shirt_size: data ? data.data.attributes.statistics.t_shirt_size : '',
       hip_size_cm: data ? data.data.attributes.statistics.hip_size_cm : '',
       hip_size_in: data ? data.data.attributes.statistics.hip_size_in : '',
-      ethnicity: data ? data.data.attributes.statistics.ethnicity : [],
-      other_talent_types: data ? data.data.attributes.statistics.other_talent_types : [],
+      ethnicity: data ? data.data.attributes.statistics.ethnicity : [''],
+      other_talent_types: data ? data.data.attributes.statistics.other_talent_types : [''],
     },
   };
 
@@ -169,6 +169,8 @@ const Statistics = () => {
     onSubmit: (values) => handleUpdateStatistics(values),
     enableReinitialize: true,
   });
+
+  console.log(form);
 
   useEffect(() => {
     if (data) {
