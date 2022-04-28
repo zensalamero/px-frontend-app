@@ -170,8 +170,6 @@ const Statistics = () => {
     enableReinitialize: true,
   });
 
-  console.log(form);
-
   useEffect(() => {
     if (data?.data.attributes.statistics) {
       form.setFieldValue('attributes.region', data.data.attributes.statistics.region ?? '');
@@ -202,8 +200,8 @@ const Statistics = () => {
       form.setFieldValue('attributes.t_shirt_size', data.data.attributes.statistics.t_shirt_size ?? '');
       form.setFieldValue('attributes.hip_size_cm', data.data.attributes.statistics.hip_size_cm ?? '');
       form.setFieldValue('attributes.hip_size_in', data.data.attributes.statistics.hip_size_in ?? '');
-      form.setFieldValue('attributes.ethnicity', data.data.attributes.statistics.ethnicity);
-      form.setFieldValue('attributes.other_talent_types', data.data.attributes.statistics.other_talent_types);
+      form.setFieldValue('attributes.ethnicity', data.data.attributes.statistics?.ethnicity ?? []);
+      form.setFieldValue('attributes.other_talent_types', data.data.attributes.statistics.other_talent_types ?? []);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
@@ -237,10 +235,10 @@ const Statistics = () => {
     value: string;
   }
 
-  // const onEthnicityChipDelete = (e: ChipData) => () => {
-  //   setEthnicityData((chips: any) => chips.filter((chip: any) => chip.id !== e.id));
-  //   console.log(e);
-  // };
+  // console.log(form);
+  const onEthnicityChipDelete = (e: ChipData) => () => {
+    console.log(e);
+  };
 
   const onTalentChipDelete = (e: ChipData) => () => {
     form.setFieldValue('statistics.other_talent_types', (chips: any) => chips.filter((chip: any) => chip.id !== e.id));
@@ -1588,11 +1586,8 @@ const Statistics = () => {
                               <Chip
                                 key={v.name}
                                 label={v.name}
-                                onDelete={(e) => {
-                                  // onEthnicityChipDelete(v);
-                                }}
-                                onMouseDown={(event) => {
-                                  event.stopPropagation();
+                                onDelete={() => {
+                                  onEthnicityChipDelete(v);
                                 }}
                               />
                             ))
