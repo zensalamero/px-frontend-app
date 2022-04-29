@@ -1711,7 +1711,12 @@ const Statistics = () => {
                           renderInput={(params) => (
                             <Grid className={classes.autoCompleteGrid}>
                               <Link onClick={handleOpenTalentTypesDialog}>View All</Link>
-                              <TextField {...params} variant="outlined" placeholder="Other Talent Types" />
+                              <TextField
+                                {...params}
+                                variant="outlined"
+                                onChange={form.handleChange}
+                                placeholder="Other Talent Types"
+                              />
                             </Grid>
                           )}
                         />
@@ -1749,10 +1754,11 @@ const Statistics = () => {
         setSelectedChips={(field: any, value: any) => form.setFieldValue(field, value)}
       />
       <TalentTypesDialog
+        key={form.values.statistics?.other_talent_types?.length}
         open={isTalentTypesDialogOpen}
         onClose={handleCloseTalentTypesDialog}
         selectedChips={form.values.statistics?.other_talent_types}
-        setSelectedChips={(e) => form.setFieldValue('statistics.other_talent_types', e)}
+        setSelectedChips={(field: any, value: any) => form.setFieldValue(field, value)}
       />
       <ConfirmationDialog
         open={isConfirmationDialog}

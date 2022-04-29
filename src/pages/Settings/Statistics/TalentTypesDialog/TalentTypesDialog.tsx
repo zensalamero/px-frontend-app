@@ -22,10 +22,11 @@ import { boolean } from 'yup/lib/locale';
 import { forEach } from 'lodash';
 
 type Props = {
+  key: number | undefined;
   open: boolean;
   onClose: () => void;
   selectedChips: any[] | undefined;
-  setSelectedChips: (e: any) => void;
+  setSelectedChips: (field: any, value: any) => void;
 };
 
 const TalentTypesDialog: React.FC<Props> = ({ open, onClose, selectedChips, setSelectedChips }) => {
@@ -52,7 +53,7 @@ const TalentTypesDialog: React.FC<Props> = ({ open, onClose, selectedChips, setS
   function onSave() {
     const arr = Array.from(selected);
     const res = allChips.filter((i) => arr.includes(i.id));
-    setSelectedChips(res);
+    setSelectedChips('statistics.other_talent_types', res);
   }
 
   return (
@@ -64,7 +65,7 @@ const TalentTypesDialog: React.FC<Props> = ({ open, onClose, selectedChips, setS
       classes={{ paper: !isLargeDialog ? classes.dialogPaper : classes.dialogPaperLarge }}
     >
       <DialogTitle id="form-dialog-title" className={classes.dialog__header}>
-        <span>Select Ethnicity</span>
+        <span>Select Other Talent Types</span>
         <Box>
           <IconButton onClick={toggleLargeDialog}>
             <UnfoldMoreIcon style={{ fontSize: 14 }} />
