@@ -1,15 +1,17 @@
 import { createStyles, makeStyles } from '@material-ui/core';
 
-export const useStyles = makeStyles(() =>
+export const useStyles = makeStyles((theme) =>
   createStyles({
     contentContainer: {
       padding: '0 144px',
       marginTop: '16px',
     },
     profileItemsContainer: {
-      '& .MuiGrid-grid-lg-2': {
-        maxWidth: '20%',
-        flexBasis: '20%',
+      [theme.breakpoints.up('md')]: {
+        '& .MuiGrid-grid-lg-2': {
+          maxWidth: '20%',
+          flexBasis: '20%',
+        },
       },
     },
     autocompleteContainer: {

@@ -440,6 +440,7 @@ const Statistics = () => {
                                 <Grid xs={6} md={6} item>
                                   <InputNumber
                                     label={'Height'}
+                                    fullWidth
                                     InputProps={{
                                       disableUnderline: true,
                                       endAdornment: <InputAdornment position="end">cm</InputAdornment>,
@@ -457,6 +458,7 @@ const Statistics = () => {
                                 <Grid xs={6} md={6} item>
                                   <InputNumber
                                     label={' '}
+                                    fullWidth
                                     InputProps={{
                                       disableUnderline: true,
                                       endAdornment: <InputAdornment position="end">in</InputAdornment>,
@@ -490,7 +492,11 @@ const Statistics = () => {
                                     onChange={(e) => {
                                       form.handleChange(e);
                                     }}
-                                    name="statistics.height_cm"
+                                    name={
+                                      form.values.statistics?.metric_system === 'Imperial'
+                                        ? 'statistics.height_in'
+                                        : 'statistics.height_cm'
+                                    }
                                     value={
                                       form.values.statistics?.metric_system === 'Imperial'
                                         ? form.values.statistics?.height_in
@@ -509,6 +515,7 @@ const Statistics = () => {
                                 <Grid xs={6} md={6} item>
                                   <InputNumber
                                     label={'Waist Size'}
+                                    fullWidth
                                     InputProps={{
                                       disableUnderline: true,
                                       endAdornment: <InputAdornment position="end">cm</InputAdornment>,
@@ -526,6 +533,7 @@ const Statistics = () => {
                                 <Grid xs={6} md={6} item>
                                   <InputNumber
                                     label={' '}
+                                    fullWidth
                                     InputProps={{
                                       disableUnderline: true,
                                       endAdornment: <InputAdornment position="end">in</InputAdornment>,
@@ -559,7 +567,11 @@ const Statistics = () => {
                                     onChange={(e) => {
                                       form.handleChange(e);
                                     }}
-                                    name="statistics.waist_cm"
+                                    name={
+                                      form.values.statistics?.metric_system === 'Imperial'
+                                        ? 'statistics.waist_in'
+                                        : 'statistics.waist_cm'
+                                    }
                                     value={
                                       form.values.statistics?.metric_system === 'Imperial'
                                         ? form.values.statistics?.waist_in
@@ -580,6 +592,7 @@ const Statistics = () => {
                                 <Grid xs={6} md={6} item>
                                   <InputNumber
                                     label={'Hat Size'}
+                                    fullWidth
                                     InputProps={{
                                       disableUnderline: true,
                                       endAdornment: <InputAdornment position="end">cm</InputAdornment>,
@@ -597,6 +610,7 @@ const Statistics = () => {
                                 <Grid xs={6} md={6} item>
                                   <InputNumber
                                     label={' '}
+                                    fullWidth
                                     InputProps={{
                                       disableUnderline: true,
                                       endAdornment: <InputAdornment position="end">in</InputAdornment>,
@@ -630,7 +644,11 @@ const Statistics = () => {
                                     onChange={(e) => {
                                       form.handleChange(e);
                                     }}
-                                    name="statistics.hat_cm"
+                                    name={
+                                      form.values.statistics?.metric_system === 'Imperial'
+                                        ? 'statistics.hat_in'
+                                        : 'statistics.hat_cm'
+                                    }
                                     value={
                                       form.values.statistics?.metric_system === 'Imperial'
                                         ? form.values.statistics?.hat_in
@@ -649,6 +667,7 @@ const Statistics = () => {
                                 <Grid xs={6} md={6} item>
                                   <InputNumber
                                     label={'Weight'}
+                                    fullWidth
                                     InputProps={{
                                       disableUnderline: true,
                                       endAdornment: <InputAdornment position="end">kg</InputAdornment>,
@@ -666,6 +685,7 @@ const Statistics = () => {
                                 <Grid xs={6} md={6} item>
                                   <InputNumber
                                     label={' '}
+                                    fullWidth
                                     InputProps={{
                                       disableUnderline: true,
                                       endAdornment: <InputAdornment position="end">lb</InputAdornment>,
@@ -699,7 +719,11 @@ const Statistics = () => {
                                     onChange={(e) => {
                                       form.handleChange(e);
                                     }}
-                                    name="statistics.weight_kg"
+                                    name={
+                                      form.values.statistics?.metric_system === 'Imperial'
+                                        ? 'statistics.weight_lb'
+                                        : 'statistics.weight_kg'
+                                    }
                                     value={
                                       form.values.statistics?.metric_system === 'Imperial'
                                         ? form.values.statistics?.weight_lb
@@ -743,6 +767,7 @@ const Statistics = () => {
                                 <Grid xs={6} md={6} item>
                                   <InputNumber
                                     label={'Inside Leg'}
+                                    fullWidth
                                     InputProps={{
                                       disableUnderline: true,
                                       endAdornment: <InputAdornment position="end">cm</InputAdornment>,
@@ -760,6 +785,7 @@ const Statistics = () => {
                                 <Grid xs={6} md={6} item>
                                   <InputNumber
                                     label={' '}
+                                    fullWidth
                                     InputProps={{
                                       disableUnderline: true,
                                       endAdornment: <InputAdornment position="end">in</InputAdornment>,
@@ -793,7 +819,11 @@ const Statistics = () => {
                                     onChange={(e) => {
                                       form.handleChange(e);
                                     }}
-                                    name="statistics.inside_leg_cm"
+                                    name={
+                                      form.values.statistics?.metric_system === 'Imperial'
+                                        ? 'statistics.inside_leg_in'
+                                        : 'statistics.inside_leg_cm'
+                                    }
                                     value={
                                       form.values.statistics?.metric_system === 'Imperial'
                                         ? form.values.statistics?.inside_leg_in
@@ -812,6 +842,7 @@ const Statistics = () => {
                                 <Grid xs={6} md={6} item>
                                   <InputNumber
                                     label={'Outside Leg'}
+                                    fullWidth
                                     InputProps={{
                                       disableUnderline: true,
                                       endAdornment: <InputAdornment position="end">cm</InputAdornment>,
@@ -829,6 +860,7 @@ const Statistics = () => {
                                 <Grid xs={6} md={6} item>
                                   <InputNumber
                                     label={' '}
+                                    fullWidth
                                     InputProps={{
                                       disableUnderline: true,
                                       endAdornment: <InputAdornment position="end">in</InputAdornment>,
@@ -862,7 +894,11 @@ const Statistics = () => {
                                     onChange={(e) => {
                                       form.handleChange(e);
                                     }}
-                                    name="statistics.outside_leg_cm"
+                                    name={
+                                      form.values.statistics?.metric_system === 'Imperial'
+                                        ? 'statistics.outside_leg_in'
+                                        : 'statistics.outside_leg_cm'
+                                    }
                                     value={
                                       form.values.statistics?.metric_system === 'Imperial'
                                         ? form.values.statistics?.outside_leg_in
@@ -955,6 +991,7 @@ const Statistics = () => {
                                 <Grid xs={6} md={6} item>
                                   <InputNumber
                                     label={'Height'}
+                                    fullWidth
                                     InputProps={{
                                       disableUnderline: true,
                                       endAdornment: <InputAdornment position="end">cm</InputAdornment>,
@@ -972,6 +1009,7 @@ const Statistics = () => {
                                 <Grid xs={6} md={6} item>
                                   <InputNumber
                                     label={' '}
+                                    fullWidth
                                     InputProps={{
                                       disableUnderline: true,
                                       endAdornment: <InputAdornment position="end">in</InputAdornment>,
@@ -991,6 +1029,7 @@ const Statistics = () => {
                                 <Grid xs={12} md={12} item>
                                   <InputNumber
                                     label={'Height'}
+                                    fullWidth
                                     InputProps={{
                                       disableUnderline: true,
                                       endAdornment: (
@@ -1004,7 +1043,11 @@ const Statistics = () => {
                                     onChange={(e) => {
                                       form.handleChange(e);
                                     }}
-                                    name="statistics.height_cm"
+                                    name={
+                                      form.values.statistics?.metric_system === 'Imperial'
+                                        ? 'statistics.height_in'
+                                        : 'statistics.height_cm'
+                                    }
                                     value={
                                       form.values.statistics?.metric_system === 'Imperial'
                                         ? form.values.statistics?.height_in
@@ -1023,6 +1066,7 @@ const Statistics = () => {
                                 <Grid xs={6} md={6} item>
                                   <InputNumber
                                     label={'Waist'}
+                                    fullWidth
                                     InputProps={{
                                       disableUnderline: true,
                                       endAdornment: <InputAdornment position="end">cm</InputAdornment>,
@@ -1040,6 +1084,7 @@ const Statistics = () => {
                                 <Grid xs={6} md={6} item>
                                   <InputNumber
                                     label={' '}
+                                    fullWidth
                                     InputProps={{
                                       disableUnderline: true,
                                       endAdornment: <InputAdornment position="end">in</InputAdornment>,
@@ -1059,6 +1104,7 @@ const Statistics = () => {
                                 <Grid xs={12} md={12} item>
                                   <InputNumber
                                     label={'Waist'}
+                                    fullWidth
                                     InputProps={{
                                       disableUnderline: true,
                                       endAdornment: (
@@ -1072,7 +1118,11 @@ const Statistics = () => {
                                     onChange={(e) => {
                                       form.handleChange(e);
                                     }}
-                                    name="statistics.waist_cm"
+                                    name={
+                                      form.values.statistics?.metric_system === 'Imperial'
+                                        ? 'statistics.waist_in'
+                                        : 'statistics.waist_cm'
+                                    }
                                     value={
                                       form.values.statistics?.metric_system === 'Imperial'
                                         ? form.values.statistics?.waist_in
@@ -1140,6 +1190,7 @@ const Statistics = () => {
                                 <Grid xs={6} md={6} item>
                                   <InputNumber
                                     label={'Weight'}
+                                    fullWidth
                                     InputProps={{
                                       disableUnderline: true,
                                       endAdornment: <InputAdornment position="end">kg</InputAdornment>,
@@ -1157,6 +1208,7 @@ const Statistics = () => {
                                 <Grid xs={6} md={6} item>
                                   <InputNumber
                                     label={' '}
+                                    fullWidth
                                     onChange={(e) => {
                                       form.handleChange(e);
                                       lbToKg(e, 'statistics.weight_kg');
@@ -1176,6 +1228,7 @@ const Statistics = () => {
                                 <Grid xs={12} md={12} item>
                                   <InputNumber
                                     label={'Weight'}
+                                    fullWidth
                                     InputProps={{
                                       disableUnderline: true,
                                       endAdornment: (
@@ -1187,7 +1240,11 @@ const Statistics = () => {
                                     }}
                                     InputLabelProps={{ shrink: true }}
                                     onChange={form.handleChange}
-                                    name="statistics.weight_kg"
+                                    name={
+                                      form.values.statistics?.metric_system === 'Imperial'
+                                        ? 'statistics.weight_lb'
+                                        : 'statistics.weight_kg'
+                                    }
                                     value={
                                       form.values.statistics?.metric_system === 'Imperial'
                                         ? form.values.statistics?.weight_lb
@@ -1206,6 +1263,7 @@ const Statistics = () => {
                                 <Grid xs={6} md={6} item>
                                   <InputNumber
                                     label={'Collar Size'}
+                                    fullWidth
                                     InputProps={{
                                       disableUnderline: true,
                                       endAdornment: <InputAdornment position="end">cm</InputAdornment>,
@@ -1223,6 +1281,7 @@ const Statistics = () => {
                                 <Grid xs={6} md={6} item>
                                   <InputNumber
                                     label={' '}
+                                    fullWidth
                                     InputProps={{
                                       disableUnderline: true,
                                       endAdornment: <InputAdornment position="end">in</InputAdornment>,
@@ -1242,6 +1301,7 @@ const Statistics = () => {
                                 <Grid xs={12} md={12} item>
                                   <InputNumber
                                     label={'Collar Size'}
+                                    fullWidth
                                     InputProps={{
                                       disableUnderline: true,
                                       endAdornment: (
@@ -1253,7 +1313,11 @@ const Statistics = () => {
                                     }}
                                     InputLabelProps={{ shrink: true }}
                                     onChange={form.handleChange}
-                                    name="statistics.collar_size_cm"
+                                    name={
+                                      form.values.statistics?.metric_system === 'Imperial'
+                                        ? 'statistics.collar_size_in'
+                                        : 'statistics.collar_size_cm'
+                                    }
                                     value={
                                       form.values.statistics?.metric_system === 'Imperial'
                                         ? form.values.statistics?.collar_size_in
@@ -1272,6 +1336,7 @@ const Statistics = () => {
                                 <Grid xs={6} md={6} item>
                                   <InputNumber
                                     label={'Inside Leg'}
+                                    fullWidth
                                     InputProps={{
                                       disableUnderline: true,
                                       endAdornment: <InputAdornment position="end">cm</InputAdornment>,
@@ -1289,6 +1354,7 @@ const Statistics = () => {
                                 <Grid xs={6} md={6} item>
                                   <InputNumber
                                     label={' '}
+                                    fullWidth
                                     InputProps={{
                                       disableUnderline: true,
                                       endAdornment: <InputAdornment position="end">in</InputAdornment>,
@@ -1308,6 +1374,7 @@ const Statistics = () => {
                                 <Grid xs={12} md={12} item>
                                   <InputNumber
                                     label={'Inside Leg'}
+                                    fullWidth
                                     InputProps={{
                                       disableUnderline: true,
                                       endAdornment: (
@@ -1319,7 +1386,11 @@ const Statistics = () => {
                                     }}
                                     InputLabelProps={{ shrink: true }}
                                     onChange={form.handleChange}
-                                    name="statistics.inside_leg_cm"
+                                    name={
+                                      form.values.statistics?.metric_system === 'Imperial'
+                                        ? 'statistics.inside_leg_in'
+                                        : 'statistics.inside_leg_cm'
+                                    }
                                     value={
                                       form.values.statistics?.metric_system === 'Imperial'
                                         ? form.values.statistics?.inside_leg_in
@@ -1338,6 +1409,7 @@ const Statistics = () => {
                                 <Grid xs={6} md={6} item>
                                   <InputNumber
                                     label={'Outside Leg'}
+                                    fullWidth
                                     InputProps={{
                                       disableUnderline: true,
                                       endAdornment: <InputAdornment position="end">cm</InputAdornment>,
@@ -1355,6 +1427,7 @@ const Statistics = () => {
                                 <Grid xs={6} md={6} item>
                                   <InputNumber
                                     label={' '}
+                                    fullWidth
                                     InputProps={{
                                       disableUnderline: true,
                                       endAdornment: <InputAdornment position="end">in</InputAdornment>,
@@ -1374,6 +1447,7 @@ const Statistics = () => {
                                 <Grid xs={12} md={12} item>
                                   <InputNumber
                                     label={'Outside Leg'}
+                                    fullWidth
                                     InputProps={{
                                       disableUnderline: true,
                                       endAdornment: (
@@ -1384,7 +1458,11 @@ const Statistics = () => {
                                     }}
                                     InputLabelProps={{ shrink: true }}
                                     onChange={form.handleChange}
-                                    name="statistics.outside_leg_cm"
+                                    name={
+                                      form.values.statistics?.metric_system === 'Imperial'
+                                        ? 'statistics.outside_leg_in'
+                                        : 'statistics.outside_leg_cm'
+                                    }
                                     value={
                                       form.values.statistics?.metric_system === 'Imperial'
                                         ? form.values.statistics?.outside_leg_in
@@ -1496,6 +1574,7 @@ const Statistics = () => {
                                   <Grid xs={6} md={6} item>
                                     <InputNumber
                                       label={'Hip Size'}
+                                      fullWidth
                                       InputProps={{
                                         disableUnderline: true,
                                         endAdornment: <InputAdornment position="end">cm</InputAdornment>,
@@ -1513,6 +1592,7 @@ const Statistics = () => {
                                   <Grid xs={6} md={6} item>
                                     <InputNumber
                                       label={' '}
+                                      fullWidth
                                       InputProps={{
                                         disableUnderline: true,
                                         endAdornment: <InputAdornment position="end">in</InputAdornment>,
@@ -1532,12 +1612,30 @@ const Statistics = () => {
                                   <Grid xs={12} md={12} item>
                                     <InputNumber
                                       label={'Hip Size'}
+                                      fullWidth
                                       InputProps={{
                                         disableUnderline: true,
-                                        endAdornment: <InputAdornment position="end">cm</InputAdornment>,
+                                        endAdornment: (
+                                          <InputAdornment position="end">
+                                            {form.values.statistics?.metric_system === 'Imperial' ? 'in' : 'cm'}
+                                          </InputAdornment>
+                                        ),
                                         inputProps: { min: 0 },
                                       }}
                                       InputLabelProps={{ shrink: true }}
+                                      onChange={(e) => {
+                                        form.handleChange(e);
+                                      }}
+                                      name={
+                                        form.values.statistics?.metric_system === 'Imperial'
+                                          ? 'statistics.hip_size_in'
+                                          : 'statistics.hip_size_cm'
+                                      }
+                                      value={
+                                        form.values.statistics?.metric_system === 'Imperial'
+                                          ? form.values.statistics?.hip_size_in
+                                          : form.values.statistics?.hip_size_cm
+                                      }
                                     />
                                   </Grid>
                                 </Grid>
